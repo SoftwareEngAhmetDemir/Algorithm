@@ -1,0 +1,29 @@
+let s = "((()()))";
+
+let solve = [];
+
+for (let i = 0; i < s.length + 1; i++) {
+  solve[i] = [];
+}
+for (let i = 0; i < s.length + 1; i++) {
+  for (let j = 0; j < s.length + 1; j++) {
+    solve[i][j] = 0;
+  }
+}
+
+for (let i = 1; i < s.length + 1; i++) {
+  for (let j = 1; j < s.length + 1; j++) {
+    if (s[i - 1] === ")" || j <= i )
+      solve[i][j] = Math.max(solve[i - 1][j], solve[i][j - 1]);
+    else if (s[i - 1] === "(" && s[j - 1] === ")")
+      solve[i][j] = Math.max(
+        solve[i - 1][j - 1] + 1,
+        solve[i - 1][j],
+        solve[i][j - 1]
+      );
+    else solve[i][j] = Math.max(solve[i - 1][j], solve[i][j - 1]);
+  }
+}
+
+
+console.log(solve[s.length][s.length] * 2);
